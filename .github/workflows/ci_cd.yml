@@ -1,7 +1,7 @@
 name: CI & CD
 on:
   push:
-    branches: 
+    branches:
       - main
       - dev
       - "hotfix-**"
@@ -19,16 +19,27 @@ jobs:
   CD:
     runs-on: ubuntu-latest
     needs: CI
+    # steps:
+    #   - name: Deploy
+    #     uses: cross-the-world/scp-pipeline@master
+    #     env:
+    #       WELCOME: "welcome =======>"
+    #       LASTSSH: "end <======="
+    #     with:
+    #       user: ${{ secrets.USERNAME }}
+    #       pass: ${{ secrets.PASSWORD }}
+    #       host: ${{ secrets.SERVER_IP }}
+    #       connect_timeout: 20s
+    #       local: './dist/*'
+    #       remote: /var/www/react/login/
     steps:
       - name: Deploy
-        uses: cross-the-world/scp-pipeline@master
+        uses: easingthemes/ssh-deploy@main
         env:
-          WELCOME: "welcome =======>"
-          LASTSSH: "end <======="
-        with:
-          user: ${{ secrets.USERNAME }}
-          pass: ${{ secrets.PASSWORD }}
-          host: ${{ secrets.SERVER_IP }}
-          connect_timeout: 20s
-          local: './dist/*'
-          remote: /var/www/react/login/
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_USER: "/var/www/react/login/"
+          TARGET:
+          EXCLUDE: "/dist/, /node_modules/"
