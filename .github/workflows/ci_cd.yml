@@ -16,23 +16,6 @@ jobs:
       - run: sudo npm install -g pnpm
       - run: pnpm install
       - run: pnpm build
-  CD:
-    runs-on: ubuntu-latest
-    needs: CI
-    # steps:
-    #   - name: Deploy
-    #     uses: cross-the-world/scp-pipeline@master
-    #     env:
-    #       WELCOME: "welcome =======>"
-    #       LASTSSH: "end <======="
-    #     with:
-    #       user: ${{ secrets.USERNAME }}
-    #       pass: ${{ secrets.PASSWORD }}
-    #       host: ${{ secrets.SERVER_IP }}
-    #       connect_timeout: 20s
-    #       local: './dist/*'
-    #       remote: /var/www/react/login/
-    steps:
       - name: Deploy
         uses: easingthemes/ssh-deploy@main
         env:
@@ -43,3 +26,30 @@ jobs:
           REMOTE_USER: ${{ secrets.ROOT }}
           TARGET: "/var/www/react/login/"
           EXCLUDE: "/dist/, /node_modules/"
+  # CD:
+  #   runs-on: ubuntu-latest
+  #   needs: CI
+  #   # steps:
+  #   #   - name: Deploy
+  #   #     uses: cross-the-world/scp-pipeline@master
+  #   #     env:
+  #   #       WELCOME: "welcome =======>"
+  #   #       LASTSSH: "end <======="
+  #   #     with:
+  #   #       user: ${{ secrets.USERNAME }}
+  #   #       pass: ${{ secrets.PASSWORD }}
+  #   #       host: ${{ secrets.SERVER_IP }}
+  #   #       connect_timeout: 20s
+  #   #       local: './dist/*'
+  #   #       remote: /var/www/react/login/
+  #   steps:
+  #     - name: Deploy
+  #       uses: easingthemes/ssh-deploy@main
+  #       env:
+  #         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_ROOT }}
+  #         ARGS: "-rltgoDzvO"
+  #         SOURCE: "dist/"
+  #         REMOTE_HOST: ${{ secrets.SERVER_IP }}
+  #         REMOTE_USER: ${{ secrets.ROOT }}
+  #         TARGET: "/var/www/react/login/"
+  #         EXCLUDE: "/dist/, /node_modules/"
