@@ -1,36 +1,43 @@
 import { useState } from "react";
+import { Button } from "antd";
+import { Routes, Route, Link } from "react-router-dom";
+import { useSelector } from "@/store";
+
+import Register from "@/features/register";
+
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const isLogged = useSelector(state => state.register.isLogged);
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="logo">
+        <img src="/vite.svg" className="logo" alt="Vite logo" />
+        <img
+          className="i-quill-nuclear w10 h10 mx-auto mb-10 text-yellow"
+          animate="bounce"
+        />
+        <img src={reactLogo} className="logo react" alt="React logo" />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div className="i-quill-nuclear w10 h10 mx-auto" />
-      <p className="p10" text="blue-4 hover:blue-8">
-        HELLO
-      </p>
+
+      <nav>
+        {isLogged ? (
+          <Link to="/">
+            <div className="i-quill-command w10 h10 text-blue-4" />
+          </Link>
+        ) : (
+          <Link to="register">
+            <div className="i-quill-vip w10 h10 text-blue-4" />
+          </Link>
+        )}
+      </nav>
+
+      <section>
+        <Routes>
+          <Route path="/register" element={<Register />}></Route>
+        </Routes>
+      </section>
     </div>
   );
 }

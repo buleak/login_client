@@ -17,9 +17,13 @@ export interface UserState {
   gender?: Gender;
   work_address?: string;
   role: Role;
+  isLogged?: boolean;
 }
 
-const initialState = {} as UserState;
+const initialState = {
+  role: "GUEST",
+  isLogged: false,
+} as UserState;
 export type UserStateKey = keyof UserState;
 export type UserStateValue = keyof typeof initialState;
 interface Fields {
@@ -35,8 +39,13 @@ export const slice = createSlice({
       let { field, value } = action.payload;
       state[field] = value;
     },
+    submitAccount(state, action: PayloadAction<UserState>) {
+      state.isLogged = true;
+      state.role = "MEMBER";
+      state = { ...state, ...action.payload };
+    },
   },
 });
 
-export const { changeField } = slice.actions;
+export const { changeField, submitAccount } = slice.actions;
 export const registerSliceReducer = slice.reducer;
