@@ -32,6 +32,3 @@ jobs:
           connect_timeout: 20s
           local: './dist/*'
           remote: /var/www/react/login
-          # remote: ~/react
-          scp: |
-            './dist' => /var/www/react/
