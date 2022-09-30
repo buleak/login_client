@@ -19,29 +19,17 @@ jobs:
       - name: Deploy
         uses: easingthemes/ssh-deploy@main
         env:
+          REMOTE_USER: ${{ secrets.ROOT }}
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_ROOT }}
           ARGS: "-rltgoDzvO"
           SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.SERVER_IP }}
-          REMOTE_USER: ${{ secrets.ROOT }}
           TARGET: "/var/www/react/login/"
           EXCLUDE: "/dist/, /node_modules/"
   # CD:
   #   runs-on: ubuntu-latest
   #   needs: CI
-  #   # steps:
-  #   #   - name: Deploy
-  #   #     uses: cross-the-world/scp-pipeline@master
-  #   #     env:
-  #   #       WELCOME: "welcome =======>"
-  #   #       LASTSSH: "end <======="
-  #   #     with:
-  #   #       user: ${{ secrets.USERNAME }}
-  #   #       pass: ${{ secrets.PASSWORD }}
-  #   #       host: ${{ secrets.SERVER_IP }}
-  #   #       connect_timeout: 20s
-  #   #       local: './dist/*'
-  #   #       remote: /var/www/react/login/
+  # 不能和 CI任务分开, CI任务构建完成后, 不会保留dist文件, CD任务里找不到dist
   #   steps:
   #     - name: Deploy
   #       uses: easingthemes/ssh-deploy@main

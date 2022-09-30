@@ -28,7 +28,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <div className="i-quill-nuclear w10 h10 mx-auto" />
-      <p className="red p10">HELLO</p>
+      <p className="text-red p10">HELLO</p>
     </div>
   )
 }
