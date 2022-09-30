@@ -40,6 +40,6 @@ jobs:
           ARGS: "-rltgoDzvO"
           SOURCE: "dist/"
           REMOTE_HOST: ${{ secrets.SERVER_IP }}
-          REMOTE_USER: "/var/www/react/login/"
-          TARGET:
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: "/var/www/react/login/"
           EXCLUDE: "/dist/, /node_modules/"
