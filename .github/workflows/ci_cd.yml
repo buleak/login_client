@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: sudo npm install pnpm
+      - run: sudo npm install -g pnpm
       - run: pnpm install
       - run: pnpm build
   CD:
